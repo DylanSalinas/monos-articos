@@ -145,9 +145,11 @@ function agregarProductoAlCarrito(idProducto) {
     actualizarCarritoHTML(); // Actualizar la vista del carrito
 }
 
+
 // Maneja el evento de clic en los botones "Comprar".
 function manejarClicComprar(evento) {
     const productoId = evento.target.dataset.id;
+    if (!productoId) return;  // <-- Ignorar si no tiene id
     agregarProductoAlCarrito(productoId);
 }
 
