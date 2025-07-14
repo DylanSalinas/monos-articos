@@ -161,7 +161,7 @@ function agregarProductos() {
         divProductos.insertAdjacentHTML("afterbegin",
             `
     <div class="card">
-        <a href="#"><img src="${producto.imagen}" alt="${producto.nombre}" class="card"></a>
+        <img src="${producto.imagen}" alt="${producto.nombre}" class="card" style="pointer-events: none;">
         <div class="info">
             <h3>${producto.nombre}</h3>
             <p>$${producto.precio}</p>
@@ -179,19 +179,21 @@ function agregarProductos() {
 
 // Maneja el evento de clic en los botones de cantidad y eliminar del carrito.
 function manejarClicCarrito(evento) {
-    const target = evento.target;
+    // Intentamos encontrar el botón que tiene la clase 'btn-cantidad' o 'btn-eliminar'
+    const target = evento.target.closest(".btn-cantidad, .btn-eliminar");
 
-    if (target.classList.contains("btn-cantidad") || target.classList.contains("btn-eliminar")) {
-        const productoId = target.dataset.id;
-        const accion = target.dataset.action;
+    // Si no hay un botón relacionado con esas clases, salimos
+    if (!target) return;
 
-        if (accion === "eliminar") {
-            eliminarProductoDelCarrito(productoId);
-        } else if (accion === "restar") {
-            restarCantidadProducto(productoId);
-        } else if (accion === "sumar") {
-            sumarCantidadProducto(productoId);
-        }
+    const productoId = target.dataset.id;
+    const accion = target.dataset.action;
+
+    if (accion === "eliminar") {
+        eliminarProductoDelCarrito(productoId);
+    } else if (accion === "restar") {
+        restarCantidadProducto(productoId);
+    } else if (accion === "sumar") {
+        sumarCantidadProducto(productoId);
     }
 }
 
